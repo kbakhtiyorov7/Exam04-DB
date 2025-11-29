@@ -1,15 +1,16 @@
+from sqlalchemy import URL, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 from .config import config
-from sqlalchemy import URL,create_engine,MetaData
-from sqlalchemy.orm import Session, declarative_base
 
-DATABSE_URL = URL.create(
-    drivername="postgres+psycopg2",
-    username=config.DB_USER,
-    password=config.DB_PASS,
+DATABASE_URL = URL.create(
+    drivername='postgresql+psycopg2',
     host=config.DB_HOST,
     port=config.DB_PORT,
+    username=config.DB_USER,
+    password=config.DB_PASS,
     database=config.DB_NAME
 )
+engine = create_engine(url=DATABASE_URL)
+Base = declarative_base()
+LocalSession = sessionmaker(engine)
 
-engine = create_engine(DATABSE_URL)
-metadate_obj = MetaData()
