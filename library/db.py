@@ -14,3 +14,5 @@ engine = create_engine(url=DATABASE_URL)
 Base = declarative_base()
 LocalSession = sessionmaker(engine)
 
+def get_db():
+    return LocalSession()

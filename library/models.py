@@ -19,9 +19,9 @@ class Author(Base):
 class Book(Base):
     __tablename__ = "books"
 
-    book_id = Column('id',Integer, primary_key=True, autoincrement=True)
+    book_id = Column('id',Integer, primary_key=True)
     title = Column('title',String(200), nullable=False)
-    author_id = Column('author_id',Integer, ForeignKey("authors.id"))
+    author_id = Column('author_id',Integer, ForeignKey("authors.id",ondelete="SET NULL"))
     published_year = Column('published_year',Integer)
     isbn = Column('isbn',String(13), unique=True, nullable=True) # bo'sh bolishi mumkin emas
     is_available = Column('is_available',Boolean, default=True)
@@ -36,7 +36,7 @@ class Book(Base):
 class Student(Base):
     __tablename__ = "students"
 
-    student_id = Column('id',Integer, primary_key=True, autoincrement=True)
+    student_id = Column('id',Integer, primary_key=True)
     full_name = Column('full_name',String(150), nullable=False)
     email = Column('email',String(100), unique=True, nullable=False)
     grade = Column('grade',String(20), nullable=True)
@@ -49,9 +49,9 @@ class Student(Base):
 class Borrow(Base):
     __tablename__ = "borrows"
 
-    borrow_id = Column('id',Integer, primary_key=True, autoincrement=True)
-    student_id = Column('student_id',Integer, ForeignKey("students.id"))
-    book_id = Column('book_id',Integer, ForeignKey("books.id"))
+    borrow_id = Column('id',Integer, primary_key=True)
+    student_id = Column('student_id',Integer, ForeignKey("students.id",ondelete='CASCADE'))
+    book_id = Column('book_id',Integer, ForeignKey("books.id",ondelete='CASCADE'))
     borrowed_at = Column('borrowed_at',DateTime, default=datetime.now)
     due_date = Column('due_date',DateTime, default=lambda: datetime.now)
     returned_at = Column('returned_at',DateTime, nullable=True)
