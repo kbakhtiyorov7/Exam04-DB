@@ -52,9 +52,9 @@ class Borrow(Base):
     borrow_id = Column('id',Integer, primary_key=True)
     student_id = Column('student_id',Integer, ForeignKey("students.id",ondelete='CASCADE'))
     book_id = Column('book_id',Integer, ForeignKey("books.id",ondelete='CASCADE'))
-    borrowed_at = Column('borrowed_at',DateTime, default=datetime.now)
-    due_date = Column('due_date',DateTime, default=lambda: datetime.now)
-    returned_at = Column('returned_at',DateTime, nullable=True)
+    borrowed_at = Column('borrowed_at',DateTime,nullable=False)
+    due_date = Column('due_date',DateTime,nullable=False)
+    returned_at = Column('returned_at',DateTime, nullable=True,default=None)
 
     student = relationship("Student", back_populates="borrows")
     book = relationship("Book", back_populates="borrows")
